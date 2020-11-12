@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lbb.oa.mapper.sys.RoleMapper">
+
+    <select id="getSysRoleByMenuId" resultType="com.lbb.oa.model.sys.SysRole">
+        select s.* from sys_role_menu t , sys_role s where s.id = t.role_id and t.menu_id = #{menuId}
+    </select>
+
+</mapper>
