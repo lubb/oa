@@ -4,7 +4,8 @@ public class GlobalConfig {
 
     public enum ResponseCode {
         SUCCESS(0, "成功"),
-        ERROR(1, "错误");
+        ERROR(1, "错误"),
+        UNLOGIN(2,"用户未登录");
 
         private final int code;
         private final String desc;
