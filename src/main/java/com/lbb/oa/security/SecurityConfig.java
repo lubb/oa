@@ -25,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CustomAccessDecisionManager customAccessDecisionManager;
 
+    @Autowired
+    private MyAccessDeniedHandler deniedHandler;//自定义错误(403)返回数据
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -43,12 +46,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/doLogin")
                 .failureHandler(loginFailureHandler)
                 .successHandler(loginSuccessHandler)
+                .permitAll()
                 .and()
                 .logout()
                 .logoutSuccessHandler(myLogoutSuccessHandler)
+                .permitAll()
                 .and()
                 .csrf()
-                .disable();
+                .disable()
+                .exceptionHandling().accessDeniedHandler(deniedHandler);
 
     }
 }
