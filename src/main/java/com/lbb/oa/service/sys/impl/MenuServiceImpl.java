@@ -1,7 +1,6 @@
 package com.lbb.oa.service.sys.impl;
 
 import com.lbb.oa.mapper.sys.MenuMapper;
-import com.lbb.oa.mapper.sys.RoleMapper;
 import com.lbb.oa.mapper.sys.RoleMenuMapper;
 import com.lbb.oa.model.sys.SysMenu;
 import com.lbb.oa.model.sys.SysRole;
@@ -25,9 +24,6 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     private RoleMenuMapper roleMenuMapper;
-
-    @Autowired
-    private RoleMapper roleMapper;
 
     /**
      * 通过角色获取用户的菜单
@@ -59,20 +55,6 @@ public class MenuServiceImpl implements MenuService {
                     }
                 }
             }
-        }
-        return menus;
-    }
-
-    /**
-     * 获取用户的菜单 包含角色
-     * @return
-     */
-    @Override
-    public List<SysMenu> getAllMenuswithRole() {
-        List<SysMenu> menus = menuMapper.selectAll();
-        for (SysMenu sysMenu : menus){
-            List<SysRole> roles = roleMapper.getSysRoleByMenuId(sysMenu.getId());
-            sysMenu.setRoles(roles);
         }
         return menus;
     }

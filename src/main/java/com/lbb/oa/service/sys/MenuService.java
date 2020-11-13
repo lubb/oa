@@ -14,9 +14,4 @@ public interface MenuService {
      */
     public List<SysMenu> findMenuByRoles(List<SysRole> roles);
 
-    /**
-     * 获取所以的菜单 并且包含角色
-     * @return
-     */
-    List<SysMenu> getAllMenuswithRole();
 }

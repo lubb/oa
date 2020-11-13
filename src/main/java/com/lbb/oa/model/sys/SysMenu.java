@@ -34,12 +34,11 @@ public class SysMenu {
 
     private Integer available;
 
-    //此地址为后段请求的地址
-    private String path;
+    //权限字段
+    private String perms;
 
     private Date createTime;
 
     private Date modifiedTime;
 
-    private List<SysRole> roles;
 }
