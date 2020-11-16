@@ -1,7 +1,7 @@
 package com.lbb.oa.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lbb.oa.pojo.SecuritySysUser;
+import com.lbb.oa.pojo.sys.SecuritySysUser;
 import com.lbb.oa.util.GlobalConfig;
 import com.lbb.oa.util.ResponseBean;
 import org.slf4j.Logger;

@@ -1,6 +1,9 @@
 package com.lbb.oa.service.sys;
 
 import com.lbb.oa.model.sys.SysUser;
+import com.lbb.oa.pojo.sys.MenuNodeVO;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -17,4 +20,10 @@ public interface UserService {
      * @return
      */
     public SysUser selectByUsername(String username);
+
+    /**
+     * 加载菜单
+     * @return
+     */
+    List<MenuNodeVO> findMenu();
 }

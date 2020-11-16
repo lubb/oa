@@ -1,5 +1,6 @@
-package com.lbb.oa.pojo;
+package com.lbb.oa.pojo.sys;
 
+import com.lbb.oa.model.sys.SysMenu;
 import com.lbb.oa.model.sys.SysRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,6 +45,11 @@ public class SecuritySysUser implements UserDetails {
     private String avatar;
 
     /**
+     * 用户类型
+     */
+    private Integer type;
+
+    /**
      * 用户的角色信息
      */
     private List<SysRole> roles;
@@ -57,6 +63,11 @@ public class SecuritySysUser implements UserDetails {
      * 当前用户具有的权限API:例如[user:add],[user:delete]...
      */
     private Set<String> permissions;
+
+    /**
+     * 包括url+permission
+     */
+    private List<SysMenu> menus;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

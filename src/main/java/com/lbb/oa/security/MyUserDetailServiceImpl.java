@@ -3,14 +3,12 @@ package com.lbb.oa.security;
 import com.lbb.oa.model.sys.SysMenu;
 import com.lbb.oa.model.sys.SysRole;
 import com.lbb.oa.model.sys.SysUser;
-import com.lbb.oa.pojo.SecuritySysUser;
+import com.lbb.oa.pojo.sys.SecuritySysUser;
 import com.lbb.oa.service.sys.MenuService;
 import com.lbb.oa.service.sys.RoleService;
 import com.lbb.oa.service.sys.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -70,6 +68,8 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
         securitySysUser.setNickname(sysUser.getNickname());
         securitySysUser.setRoles(roles);
         securitySysUser.setUrls(urls);
+        securitySysUser.setType(sysUser.getType());
+        securitySysUser.setMenus(menus);
         securitySysUser.setPermissions(perms);
         return securitySysUser;
     }
