@@ -44,6 +44,13 @@ public class ResponseBean implements Serializable {
         return responseBean;
     }
 
+    public static ResponseBean errorLogin(String message) {
+        ResponseBean responseBean = new ResponseBean();
+        responseBean.setMsg(message);
+        responseBean.setStatus(GlobalConfig.ResponseCode.UNLOGIN.getCode());
+        return responseBean;
+    }
+
     public Integer getStatus() {
         return status;
     }
