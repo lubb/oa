@@ -66,7 +66,6 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
         securitySysUser.setPassword(sysUser.getPassword());
         securitySysUser.setAvatar(sysUser.getAvatar());
         securitySysUser.setNickname(sysUser.getNickname());
-        securitySysUser.setRoles(roles);
         securitySysUser.setUrls(urls);
         securitySysUser.setType(sysUser.getType());
         securitySysUser.setMenus(menus);

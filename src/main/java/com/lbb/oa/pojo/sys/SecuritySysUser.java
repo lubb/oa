@@ -1,15 +1,12 @@
 package com.lbb.oa.pojo.sys;
 
 import com.lbb.oa.model.sys.SysMenu;
-import com.lbb.oa.model.sys.SysRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -50,11 +47,6 @@ public class SecuritySysUser implements UserDetails {
     private Integer type;
 
     /**
-     * 用户的角色信息
-     */
-    private List<SysRole> roles;
-
-    /**
      * 当前用户具有的url
      */
     private Set<String> urls;
@@ -71,14 +63,9 @@ public class SecuritySysUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (SysRole role : roles) {
-            if (null == role.getRoleCode()) {
-                continue;
-            }
-            authorities.add(new SimpleGrantedAuthority(role.getRoleCode()));
-        }
-        return authorities;
+        //activity7 流程需要ROLE_ACTIVITI_USER角色
+        permissions.add("ROLE_ACTIVITI_USER");
+        return AuthorityUtils.createAuthorityList(permissions.toArray(new String[permissions.size()]));
     }
 
     @Override

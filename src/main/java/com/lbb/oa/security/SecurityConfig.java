@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -26,12 +27,6 @@ import java.io.PrintWriter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
-
-    @Autowired
-    private LoginFailureHandler loginFailureHandler;
-
-    @Autowired
     private MyLogoutSuccessHandler myLogoutSuccessHandler;
 
     @Bean
@@ -42,23 +37,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors()
+                .and()
+                .csrf()
+                .disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and() //基于token，所以不需要session
                 .authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() //非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为”预检”请求（preflight）
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/doLogin")
-                .permitAll()
-                .failureHandler(loginFailureHandler)
-                .successHandler(loginSuccessHandler)
-                .and()
+                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JWTLoginFilter(authenticationManager()))
                 .logout()
                 .logoutSuccessHandler(myLogoutSuccessHandler)
                 .permitAll()
                 .and()
-                .csrf()
-                .disable()
                 .addFilterAt(new ConcurrentSessionFilter(sessionRegistry(), event -> {
                     HttpServletResponse resp = event.getResponse();
                     resp.setContentType("application/json;charset=utf-8");
