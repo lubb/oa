@@ -3,9 +3,12 @@ package com.lbb.oa.service.sys.impl;
 import com.lbb.oa.mapper.sys.MenuMapper;
 import com.lbb.oa.mapper.sys.UserMapper;
 import com.lbb.oa.model.sys.SysMenu;
+import com.lbb.oa.model.sys.SysRole;
 import com.lbb.oa.model.sys.SysUser;
 import com.lbb.oa.pojo.sys.MenuNodeVO;
 import com.lbb.oa.pojo.sys.SecuritySysUser;
+import com.lbb.oa.service.sys.MenuService;
+import com.lbb.oa.service.sys.RoleService;
 import com.lbb.oa.service.sys.UserService;
 import com.lbb.oa.util.GlobalConfig;
 import com.lbb.oa.util.MenuConverterUtil;
@@ -27,6 +30,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MenuMapper menuMapper;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private MenuService menuService;
 
     /**
      * 根据用户ID获取用户信息
@@ -64,7 +73,9 @@ public class UserServiceImpl implements UserService {
             menus=menuMapper.selectAll();
         }else if(securitySysUser.getType()== GlobalConfig.UserTypeEnum.SYSTEM_USER.getTypeCode()){
             //普通系统用户
-            menus= securitySysUser.getMenus();
+            List<SysRole> roles = roleService.getRoleByUserId(securitySysUser.getId());
+            //获取用户的菜单和按钮权限
+            menus = menuService.findMenuByRoles(roles);
         }
         if(!CollectionUtils.isEmpty(menus)){
             menuNodeVOS= MenuConverterUtil.converterToMenuNodeVO(menus);

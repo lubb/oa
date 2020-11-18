@@ -54,7 +54,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = null;
         try {
             SecuritySysUser securitySysUser = (SecuritySysUser)authResult.getPrincipal();
-            token = JWTUtil.createToken(securitySysUser.getUsername(), String.join(",",securitySysUser.getPermissions()));
+            token = JWTUtil.createToken(securitySysUser.getUsername(), String.join(",",securitySysUser.getPermissions()), securitySysUser);
             // 登录成功后，返回token到header里面
             response.addHeader("token", JWTUtil.TOKEN_PREFIX + token);
             response.setContentType("application/json;charset=UTF-8");

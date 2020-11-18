@@ -21,7 +21,6 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/findMenu")
-    @PreAuthorize("hasAuthority('user:insert')")
     public ResponseBean findMenu(){
         List<MenuNodeVO> menuTreeVOS = userService.findMenu();
         return ResponseBean.success(menuTreeVOS);

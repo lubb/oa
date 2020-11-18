@@ -1,6 +1,5 @@
 package com.lbb.oa.pojo.sys;
 
-import com.lbb.oa.model.sys.SysMenu;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -47,19 +45,9 @@ public class SecuritySysUser implements UserDetails {
     private Integer type;
 
     /**
-     * 当前用户具有的url
-     */
-    private Set<String> urls;
-
-    /**
      * 当前用户具有的权限API:例如[user:add],[user:delete]...
      */
     private Set<String> permissions;
-
-    /**
-     * 包括url+permission
-     */
-    private List<SysMenu> menus;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
