@@ -11,19 +11,19 @@ public class ResponseBean implements Serializable {
     private String msg;
 
     // 响应中的数据
-    private Object object;
+    private Object data;
 
     public ResponseBean(){}
 
-    public ResponseBean(Integer status, String msg, Object object) {
+    public ResponseBean(Integer status, String msg, Object data) {
         this.status = status;
         this.msg = msg;
-        this.object = object;
+        this.data = data;
     }
 
     public static ResponseBean success(Object data) {
         ResponseBean responseBean = new ResponseBean();
-        responseBean.setObject(data);
+        responseBean.setData(data);
         responseBean.setStatus(GlobalConfig.ResponseCode.SUCCESS.getCode());
         responseBean.setMsg(GlobalConfig.ResponseCode.SUCCESS.getDesc());
         return responseBean;
@@ -31,7 +31,7 @@ public class ResponseBean implements Serializable {
 
     public static ResponseBean success(Object object, String message) {
         ResponseBean responseBean = new ResponseBean();
-        responseBean.setObject(object);
+        responseBean.setData(object);
         responseBean.setStatus(GlobalConfig.ResponseCode.SUCCESS.getCode());
         responseBean.setMsg(message);
         return responseBean;
@@ -67,15 +67,15 @@ public class ResponseBean implements Serializable {
         this.msg = msg;
     }
 
-    public Object getObject() {
-        return object;
+    public Object getData() {
+        return data;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public void setData(Object data) {
+        this.data = data;
     }
 
-    public static ResponseBean formatData(Integer status, String msg, Object obj) {
-        return new ResponseBean(status, msg, obj);
+    public static ResponseBean formatData(Integer status, String msg, Object data) {
+        return new ResponseBean(status, msg, data);
     }
 }
