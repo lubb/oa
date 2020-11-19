@@ -25,7 +25,57 @@ public class GlobalConfig {
         }
     }
 
-    public enum UserTypeEnum{
+    public enum  RoleStatusEnum {
+        DISABLE(0),
+        AVAILABLE(1);
+
+        private int statusCode;
+        RoleStatusEnum(int statusCode) {
+            this.statusCode = statusCode;
+        }
+        public int getStatusCode() {
+            return statusCode;
+        }
+
+        public void setStatusCode(int statusCode) {
+            this.statusCode = statusCode;
+        }
+    }
+
+    /**
+     * 用户状态
+     * @Author lubingbing
+     * @Date 2020/5/29 12:29
+     * @Version 1.0
+     **/
+    public enum  UserStatusEnum {
+
+        DISABLE(0),
+        AVAILABLE(1);
+
+        private int statusCode;
+
+        UserStatusEnum(int statusCode) {
+            this.statusCode = statusCode;
+        }
+
+        public int getStatusCode() {
+            return statusCode;
+        }
+
+        public void setStatusCode(int statusCode) {
+            this.statusCode = statusCode;
+        }
+    }
+
+    /**
+     * 用户类型
+     * @Author lubingbing
+     * @Date 2020/5/29 12:25
+     * @Version 1.0
+     **/
+    public enum UserTypeEnum {
+
         SYSTEM_ADMIN(0),//系统管理员admin
 
         SYSTEM_USER(1);//系统的普通用户
@@ -42,23 +92,6 @@ public class GlobalConfig {
 
         public void setTypeCode(int typeCode) {
             this.typeCode = typeCode;
-        }
-    }
-
-    public enum  RoleStatusEnum {
-        DISABLE(0),
-        AVAILABLE(1);
-
-        private int statusCode;
-        RoleStatusEnum(int statusCode) {
-            this.statusCode = statusCode;
-        }
-        public int getStatusCode() {
-            return statusCode;
-        }
-
-        public void setStatusCode(int statusCode) {
-            this.statusCode = statusCode;
         }
     }
 }

@@ -3,7 +3,7 @@ package com.lbb.oa.pojo.sys;
 import lombok.Data;
 
 /**
- * @Author zhangyukang
+ * @Author lubingbing
  * @Date 2020/3/9 20:48
  * @Version 1.0
  **/
