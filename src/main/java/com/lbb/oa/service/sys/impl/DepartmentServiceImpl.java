@@ -2,6 +2,7 @@ package com.lbb.oa.service.sys.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lbb.oa.exception.ServiceException;
 import com.lbb.oa.mapper.sys.DepartmentMapper;
 import com.lbb.oa.model.sys.SysDepartment;
 import com.lbb.oa.service.sys.DepartmentService;
@@ -63,7 +64,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void delete(Long id) {
         SysDepartment department = departmentMapper.selectByPrimaryKey(id);
         if(department==null){
-            //throw new ServiceException("要删除的部门不存在");
+            throw new ServiceException("要删除的部门不存在");
         }
         departmentMapper.deleteByPrimaryKey(id);
     }

@@ -2,6 +2,7 @@ package com.lbb.oa.util;
 
 import com.lbb.oa.model.sys.SysMenu;
 import com.lbb.oa.pojo.sys.MenuNodeVO;
+import com.lbb.oa.pojo.sys.MenuVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -48,5 +49,19 @@ public class MenuConverterUtil {
             }
         }
         return menuNodeVOS;
+    }
+
+    /**
+     * 转成menuVO(菜单和按钮）
+     * @param menu
+     * @return
+     */
+    public static MenuVO converterToMenuVO(SysMenu menu){
+        MenuVO menuVO = new MenuVO();
+        if(menu!=null){
+            BeanUtils.copyProperties(menu,menuVO);
+            menuVO.setDisabled(menu.getAvailable()==0);
+        }
+        return menuVO;
     }
 }
