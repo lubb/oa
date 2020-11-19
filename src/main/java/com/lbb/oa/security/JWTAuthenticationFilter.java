@@ -63,6 +63,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         String token = tokenHeader.replace(JWTUtil.TOKEN_PREFIX, "");
         boolean expiration = JWTUtil.isExpiration(token);
         if (expiration) {
+            //超时了如何处理
             throw new TokenIsExpiredException("token超时了");
         } else {
             String username = JWTUtil.getUsername(token);

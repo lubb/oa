@@ -38,6 +38,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (name != null && !"".equals(name)) {
             o.createCriteria().andLike("name", "%" + name + "%");
         }
+        o.setOrderByClause("create_time desc");
         List<SysDepartment> departments = departmentMapper.selectByExample(o);
         PageInfo<SysDepartment> pageInfo = new PageInfo<>(departments);
         return pageInfo;
@@ -49,10 +50,9 @@ public class DepartmentServiceImpl implements DepartmentService {
      */
     @Override
     public void add(SysDepartment sysDepartment) {
-        SysDepartment department = new SysDepartment();
-        department.setCreateTime(new Date());
-        department.setModifiedTime(new Date());
-        departmentMapper.insert(department);
+        sysDepartment.setCreateTime(new Date());
+        sysDepartment.setModifiedTime(new Date());
+        departmentMapper.insert(sysDepartment);
     }
 
     /**
