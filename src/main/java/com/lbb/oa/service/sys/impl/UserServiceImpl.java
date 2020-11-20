@@ -2,6 +2,8 @@ package com.lbb.oa.service.sys.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lbb.oa.enums.ErrorCodeEnum;
+import com.lbb.oa.enums.GlobalConfigEnum;
 import com.lbb.oa.exception.ServiceException;
 import com.lbb.oa.mapper.sys.*;
 import com.lbb.oa.model.sys.*;
@@ -86,10 +88,10 @@ public class UserServiceImpl implements UserService {
         List<MenuNodeVO> menuNodeVOS=new ArrayList<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SecuritySysUser securitySysUser = (SecuritySysUser) authentication.getPrincipal();
-        if(securitySysUser.getType()== GlobalConfig.UserTypeEnum.SYSTEM_ADMIN.getTypeCode()){
+        if(securitySysUser.getType()== GlobalConfigEnum.UserTypeEnum.SYSTEM_ADMIN.getTypeCode()){
             //超级管理员
             menus=menuMapper.selectAll();
-        }else if(securitySysUser.getType()== GlobalConfig.UserTypeEnum.SYSTEM_USER.getTypeCode()){
+        }else if(securitySysUser.getType()== GlobalConfigEnum.UserTypeEnum.SYSTEM_USER.getTypeCode()){
             //普通系统用户
             List<SysRole> roles = roleService.getRoleByUserId(securitySysUser.getId());
             //获取用户的菜单和按钮权限
@@ -255,8 +257,8 @@ public class UserServiceImpl implements UserService {
         }else {
             SysUser t = new SysUser();
             t.setId(id);
-            t.setStatus(status? GlobalConfig.UserStatusEnum.DISABLE.getStatusCode() :
-                    GlobalConfig.UserStatusEnum.AVAILABLE.getStatusCode());
+            t.setStatus(status? GlobalConfigEnum.UserStatusEnum.DISABLE.getStatusCode() :
+                    GlobalConfigEnum.UserStatusEnum.AVAILABLE.getStatusCode());
             userMapper.updateByPrimaryKeySelective(t);
         }
     }
@@ -340,8 +342,8 @@ public class UserServiceImpl implements UserService {
         user.setPassword(new BCryptPasswordEncoder().encode(userVO.getPassword()));
         user.setModifiedTime(new Date());
         user.setCreateTime(new Date());
-        user.setType(GlobalConfig.UserTypeEnum.SYSTEM_USER.getTypeCode());//添加的用户默认是普通用户
-        user.setStatus(GlobalConfig.UserStatusEnum.AVAILABLE.getStatusCode());//添加的用户默认启用
+        user.setType(GlobalConfigEnum.UserTypeEnum.SYSTEM_USER.getTypeCode());//添加的用户默认是普通用户
+        user.setStatus(GlobalConfigEnum.UserStatusEnum.AVAILABLE.getStatusCode());//添加的用户默认启用
         user.setAvatar("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1140572439,1755979681&fm=26&gp=0.jpg");
         userMapper.insert(user);
         return user;

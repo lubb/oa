@@ -10,6 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 登录用户转换
+ */
 public class SerurityUserUtil {
 
     /**

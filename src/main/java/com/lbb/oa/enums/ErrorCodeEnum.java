@@ -1,4 +1,4 @@
-package com.lbb.oa.util;
+package com.lbb.oa.enums;
 
 import com.lbb.oa.exception.BaseCodeInterface;
 import lombok.Getter;

@@ -1,9 +1,8 @@
 package com.lbb.oa.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lbb.oa.util.GlobalConfig;
+import com.lbb.oa.enums.GlobalConfigEnum;
 import com.lbb.oa.util.ResponseBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -26,9 +25,6 @@ import java.io.PrintWriter;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private MyLogoutSuccessHandler myLogoutSuccessHandler;
-
     @Bean
     SessionRegistryImpl sessionRegistry() {
         return new SessionRegistryImpl();
@@ -49,18 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTLoginFilter(authenticationManager()))
-                .logout()
-                .logoutSuccessHandler(myLogoutSuccessHandler)
-                .permitAll()
-                .and()
                 .addFilterAt(new ConcurrentSessionFilter(sessionRegistry(), event -> {
                     HttpServletResponse resp = event.getResponse();
                     resp.setContentType("application/json;charset=utf-8");
                     resp.setStatus(HttpStatus.UNAUTHORIZED.value());
                     PrintWriter out = resp.getWriter();
                     out.write(new ObjectMapper().writeValueAsString(
-                            ResponseBean.formatData(GlobalConfig.ResponseCode.ONLINE.getCode(),
-                                    GlobalConfig.ResponseCode.ONLINE.getDesc(),
+                            ResponseBean.formatData(GlobalConfigEnum.ResponseCode.ONLINE.getCode(),
+                                    GlobalConfigEnum.ResponseCode.ONLINE.getDesc(),
                                     null
                             )));
                     out.flush();

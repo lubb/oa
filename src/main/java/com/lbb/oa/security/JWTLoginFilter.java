@@ -1,9 +1,9 @@
 package com.lbb.oa.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lbb.oa.enums.GlobalConfigEnum;
 import com.lbb.oa.jwt.JWTUtil;
 import com.lbb.oa.pojo.sys.SecuritySysUser;
-import com.lbb.oa.util.GlobalConfig;
 import com.lbb.oa.util.ResponseBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.*;
@@ -49,6 +49,15 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
+    /**
+     * 登录成功后的处理
+     * @param request
+     * @param response
+     * @param chain
+     * @param authResult
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String token = null;
@@ -59,8 +68,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             response.addHeader("token", JWTUtil.TOKEN_PREFIX + token);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(new ObjectMapper().writeValueAsString(
-                    ResponseBean.formatData(GlobalConfig.ResponseCode.SUCCESS.getCode(),
-                            "登录"+GlobalConfig.ResponseCode.SUCCESS.getDesc(),
+                    ResponseBean.formatData(GlobalConfigEnum.ResponseCode.SUCCESS.getCode(),
+                            "登录"+ GlobalConfigEnum.ResponseCode.SUCCESS.getDesc(),
                             securitySysUser
                     )));
         } catch (Exception e) {
@@ -68,9 +77,17 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
+    /**
+     * 登录失败后的处理
+     * @param request
+     * @param httpServletResponse
+     * @param exception
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse, AuthenticationException exception) throws IOException, ServletException {
-        httpServletResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         String msg = "";
         if (exception instanceof LockedException) {
@@ -85,8 +102,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             msg ="用户名或者密码输入错误，请重新输入!";
         }
         httpServletResponse.getWriter().write(new ObjectMapper().writeValueAsString(
-                ResponseBean.formatData(GlobalConfig.ResponseCode.ERROR.getCode(),
-                        GlobalConfig.ResponseCode.ERROR.getDesc(),
+                ResponseBean.formatData(GlobalConfigEnum.ResponseCode.ERROR.getCode(),
+                        msg,
                         "登录失败:"+ msg
                 )));
     }

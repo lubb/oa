@@ -1,5 +1,7 @@
 package com.lbb.oa.util;
 
+import com.lbb.oa.enums.GlobalConfigEnum;
+
 import java.io.Serializable;
 
 public class ResponseBean implements Serializable {
@@ -24,15 +26,15 @@ public class ResponseBean implements Serializable {
     public static ResponseBean success(Object data) {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setData(data);
-        responseBean.setStatus(GlobalConfig.ResponseCode.SUCCESS.getCode());
-        responseBean.setMsg(GlobalConfig.ResponseCode.SUCCESS.getDesc());
+        responseBean.setStatus(GlobalConfigEnum.ResponseCode.SUCCESS.getCode());
+        responseBean.setMsg(GlobalConfigEnum.ResponseCode.SUCCESS.getDesc());
         return responseBean;
     }
 
     public static ResponseBean success(Object object, String message) {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setData(object);
-        responseBean.setStatus(GlobalConfig.ResponseCode.SUCCESS.getCode());
+        responseBean.setStatus(GlobalConfigEnum.ResponseCode.SUCCESS.getCode());
         responseBean.setMsg(message);
         return responseBean;
     }
@@ -40,14 +42,14 @@ public class ResponseBean implements Serializable {
     public static ResponseBean error(String message) {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setMsg(message);
-        responseBean.setStatus(GlobalConfig.ResponseCode.ERROR.getCode());
+        responseBean.setStatus(GlobalConfigEnum.ResponseCode.ERROR.getCode());
         return responseBean;
     }
 
     public static ResponseBean errorLogin(String message) {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setMsg(message);
-        responseBean.setStatus(GlobalConfig.ResponseCode.UNLOGIN.getCode());
+        responseBean.setStatus(GlobalConfigEnum.ResponseCode.UNLOGIN.getCode());
         return responseBean;
     }
 

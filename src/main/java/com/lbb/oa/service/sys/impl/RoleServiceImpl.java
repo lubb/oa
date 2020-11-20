@@ -2,6 +2,7 @@ package com.lbb.oa.service.sys.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lbb.oa.enums.GlobalConfigEnum;
 import com.lbb.oa.exception.ServiceException;
 import com.lbb.oa.mapper.sys.MenuMapper;
 import com.lbb.oa.mapper.sys.RoleMapper;
@@ -13,7 +14,6 @@ import com.lbb.oa.model.sys.SysRoleMenu;
 import com.lbb.oa.model.sys.SysUserRole;
 import com.lbb.oa.pojo.sys.RoleVO;
 import com.lbb.oa.service.sys.RoleService;
-import com.lbb.oa.util.GlobalConfig;
 import com.lbb.oa.util.RoleConverterUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,8 +99,8 @@ public class RoleServiceImpl implements RoleService {
         }
         SysRole t = new SysRole();
         t.setId(id);
-        t.setStatus(status? GlobalConfig.RoleStatusEnum.DISABLE.getStatusCode():
-                GlobalConfig. RoleStatusEnum.AVAILABLE.getStatusCode());
+        t.setStatus(status? GlobalConfigEnum.RoleStatusEnum.DISABLE.getStatusCode():
+                GlobalConfigEnum. RoleStatusEnum.AVAILABLE.getStatusCode());
         roleMapper.updateByPrimaryKeySelective(t);
     }
 
@@ -207,7 +207,7 @@ public class RoleServiceImpl implements RoleService {
         BeanUtils.copyProperties(roleVO,role);
         role.setCreateTime(new Date());
         role.setModifiedTime(new Date());
-        role.setStatus(GlobalConfig.RoleStatusEnum.AVAILABLE.getStatusCode());//默认启用添加的角色
+        role.setStatus(GlobalConfigEnum.RoleStatusEnum.AVAILABLE.getStatusCode());//默认启用添加的角色
         roleMapper.insert(role);
     }
 

@@ -1,6 +1,6 @@
-package com.lbb.oa.util;
+package com.lbb.oa.enums;
 
-public class GlobalConfig {
+public class GlobalConfigEnum {
 
     public enum ResponseCode {
         SUCCESS(0, "成功"),
